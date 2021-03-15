@@ -1,20 +1,57 @@
 "use strict";
 
-// grab all elements you need to change/update
-// total score
+// grab all elements you need to change/update and save em in variables bc we need to use em multiple times throughout the code instead of selecting the over and over again
+const player0El = document.querySelector(".player--0");
+const player1El = document.querySelector(".player--1");
+const score0El = document.querySelector("#score--0");
+const score1El = document.querySelector("#score--1");
+const current0El = document.querySelector("#current--0");
+const current1El = document.querySelector("#current--1");
+
+const diceEl = document.querySelector(".dice");
+const btnNew = document.querySelector(".btn--new");
+const btnRoll = document.querySelector(".btn--roll");
+const btnHold = document.querySelector(".btn--hold");
+
 // current score
-// dice pic
 
-// grab all elements you need to add event listeners
-// new game
-// roll dice
-// hold
+// starting conditions
+score0El.textContent = 0;
+score1El.textContent = 0;
+diceEl.classList.add("hidden");
 
-// store CURRENT and TOTAL score for 2 players
-// keep track of current player
+let scores = [0, 0];
+let currentScore = 0;
+let activePlayer = 0; // 0 = player1; 1 = player2
 
-// event listener for when roll dice
+// event listener function to roll dice
+btnRoll.addEventListener("click", function () {
+  // 1. generate a random number
+  const dice = Math.trunc(Math.random() * 6) + 1; // number range 1 - 6
+  console.log(dice);
+  // 2. display dice
+  diceEl.classList.remove("hidden");
+  diceEl.src = `dice-${dice}.png`;
 
-// event listener for when hold
+  // 3. Check for dice #1: if true, switch to new player
+  if (dice !== 1) {
+    // add generated dice number to current score
+    currentScore += dice;
+    document.getElementById(
+      `current--${activePlayer}`
+    ).textContent = currentScore;
+  } else {
+    // switch to next player
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    activePlayer = activePlayer === 0 ? 1 : 0;
+    currentScore = 0;
+    player0El.classList.toggle("player--active");
+    player1El.classList.toggle("player--active");
+  }
+});
+
+// function to reset game when win / reset
+
+// event listener function to hold
 
 // function to switch player
