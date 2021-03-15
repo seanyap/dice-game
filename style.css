@@ -36,6 +36,15 @@ main {
   display: flex;
 }
 
+h1 {
+  position: absolute;
+  color: white;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  top: 40px;
+  left: 40px;
+}
+
 .player {
   flex: 50%;
   padding: 9rem;
