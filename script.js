@@ -23,35 +23,69 @@ diceEl.classList.add("hidden");
 let scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0; // 0 = player1; 1 = player2
+let playing = true;
+
+// function to switch player
+const switchPlayer = function () {
+  // switch to next player (both in user interface and our program)
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  currentScore = 0;
+  player0El.classList.toggle("player--active");
+  player1El.classList.toggle("player--active");
+};
 
 // event listener function to roll dice
 btnRoll.addEventListener("click", function () {
-  // 1. generate a random number
-  const dice = Math.trunc(Math.random() * 6) + 1; // number range 1 - 6
-  console.log(dice);
-  // 2. display dice
-  diceEl.classList.remove("hidden");
-  diceEl.src = `dice-${dice}.png`;
+  if (playing) {
+    // 1. generate a random number
+    const dice = Math.trunc(Math.random() * 6) + 1; // number range 1 - 6
 
-  // 3. Check for dice #1: if true, switch to new player
-  if (dice !== 1) {
-    // add generated dice number to current score
-    currentScore += dice;
-    document.getElementById(
-      `current--${activePlayer}`
-    ).textContent = currentScore;
-  } else {
-    // switch to next player
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    currentScore = 0;
-    player0El.classList.toggle("player--active");
-    player1El.classList.toggle("player--active");
+    // 2. display dice
+    diceEl.classList.remove("hidden");
+    diceEl.src = `dice-${dice}.png`;
+
+    // 3. Check for dice #1: if true, switch to new player
+    if (dice !== 1) {
+      // add generated dice number to current score
+      currentScore += dice;
+      document.getElementById(
+        `current--${activePlayer}`
+      ).textContent = currentScore;
+    } else {
+      // switch to next player
+      switchPlayer();
+    }
   }
 });
 
-// function to reset game when win / reset
-
 // event listener function to hold
+btnHold.addEventListener("click", function () {
+  if (playing) {
+    // update total scores
+    scores[activePlayer] += currentScore;
+    // display scores
+    document.getElementById(`score--${activePlayer}`).textContent =
+      scores[activePlayer];
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
 
-// function to switch player
+    // check if total scores is >= 100
+    if (scores[activePlayer] >= 20) {
+      // finish game
+      playing = false;
+      diceEl.classList.add("hidden");
+
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add("player--winner");
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove("player--active");
+    } else {
+      // else switch player
+      switchPlayer();
+    }
+  }
+});
+
+// function to reset game when wint  / reset
