@@ -88,4 +88,25 @@ btnHold.addEventListener("click", function () {
   }
 });
 
-// function to reset game when wint  / reset
+// function to reset game when player won / reset
+btnNew.addEventListener("click", function () {
+  // reset state: total scores for player 1 & 2 and current score
+  playing = true;
+  activePlayer = 0;
+  scores = [0, 0];
+  currentScore = 0;
+
+  // update user interface to reflect new scores
+  current0El.textContent = currentScore;
+  current1El.textContent = currentScore;
+  score0El.textContent = scores[0];
+  score1El.textContent = scores[1];
+
+  // remove winner class if player won
+  player0El.classList.remove("player--winner");
+  player1El.classList.remove("player--winner");
+
+  // set default active player to player 1
+  player0El.classList.add("player--active");
+  player1El.classList.remove("player--active");
+});
