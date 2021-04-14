@@ -78,6 +78,9 @@ btnHold.addEventListener("click", function () {
       document
         .querySelector(`.player--${activePlayer}`)
         .classList.add("player--winner");
+      // update title to show winner
+      document.getElementById(`name--${activePlayer}`).textContent = "WINNER!";
+
       document
         .querySelector(`.player--${activePlayer}`)
         .classList.remove("player--active");
@@ -101,6 +104,10 @@ btnNew.addEventListener("click", function () {
   current1El.textContent = currentScore;
   score0El.textContent = scores[0];
   score1El.textContent = scores[1];
+
+  // reset player title
+  document.getElementById("name--0").textContent = "Player 1";
+  document.getElementById("name--1").textContent = "Player 2";
 
   // remove winner class if player won
   player0El.classList.remove("player--winner");
